@@ -50,6 +50,7 @@ namespace AviaryClasses.Classes {
             archetype.AddToAddFeatures(18, FeatureRefs.AnimalCompanionRank.ToString());
             archetype.AddToAddFeatures(19, FeatureRefs.AnimalCompanionRank.ToString());
             archetype.AddToAddFeatures(20, FeatureRefs.AnimalCompanionRank.ToString());
+            archetype.AddToRemoveFeatures(20, CantripSpecialization.featGuid);
 
             archetype.Configure();
 
