@@ -1,0 +1,6 @@
+﻿<Project xmlns='http://schemas.microsoft.com/developer/msbuild/2003'>
+	<PropertyGroup>
+		<WrathInstallDir>/games/Pathfinder Wrath of the Righteous/</WrathInstallDir>
+		<TargetDir>/games/Pathfinder Wrath of the Righteous/Mods</TargetDir>
+	</PropertyGroup>
+</Project>

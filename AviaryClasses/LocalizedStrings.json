@@ -1,0 +1,144 @@
+[
+  {
+    "Key": "Mod.Name",
+    "ProcessTemplates": false,
+    "enGB": "Aviary Classes"
+  },
+  {
+    "Key": "ArcaneSkirmisher.Name",
+    "enGB": "Arcane Skirmisher",
+    "ProcessTemplates": false
+  }, 
+  {
+    "Key": "ArcaneSkirmisher.Description",
+    "enGB": "Masters of both mounted combat and arcane marksmanship, these versatile warriors ride into battle atop mounts imbued with magical speed and agility. With a swift gesture, they can enchant their arrows with elemental forces or debilitating effects, turning each shot into a potentially game-changing strike from the saddle.",
+    "ProcessTemplates": false
+  },
+  {
+    "Key": "LifeSensate.Name",
+    "enGB": "Life Sensate",
+    "ProcessTemplates": false
+  }, 
+  {
+    "Key": "LifeSensate.Description",
+    "enGB": "In stark contrast to their more explosive brethren, Life Sensates have learned to harness the raw power of the elements not to scorch their foes, but to mend the wounds of their allies. These unique kineticists hone their ability to channel forces through rigorous life long studies into primal life energies learning to revive, heal, and protect those around them. By forgoing the volatile aspects of kineticism, Life Sensates achieve a profound mastery over life-affirming elements, making them invaluable assets to any party seeking to weather the harshest of challenges.",
+    "ProcessTemplates": false
+  },
+  {
+    "Key": "TriceratopsStatuetteItem.Description",
+    "enGB": "This seemingly simple statue swirls with the primal energy of Triceratop heroes of ages past. Using it may bind the spirit of those heroes to your cause. Echoes from the energies whisper the name 'Bismuth'.",
+    "ProcessTemplates": false
+  },
+  {
+    "Key": "LifeStudies.Name",
+    "enGB": "Life Studies" ,
+    "ProcessTemplates": false
+  },
+  {
+    "Key": "LifeStudies.Description",
+    "enGB": "A life sensate's base Will save bonus from the kineticist class is equal to 2 + 1/2 their kineticist level, and their base Reflex and Fortitude save bonuses are equal to 1/3 their kineticist level.\nA life sensate uses their Intelligence modifier instead of their Constitution modifier to determine their damage with wild talents, the DCs of Constitution-based wild talents, the durations of wild talents with Constitution-based durations, their bonus on concentration checks for wild talents, and any other Constitution-based effects of all their wild talents.\nThis alters the kinesticist's class skills and base savings throws and the key ability score of wild talents.",
+    "ProcessTemplates": true
+  },
+  {
+    "Key": "LifeFont.Description",
+    "enGB": "At 3rd level, a life sensate gains a +1 bonus on attack rolls and damage rolls with their kinetic blasts. The damage bonus doesn't apply to kinetic blade, kinetic whip, or other infusions that don't apply the damage bonus from elemental overflow.\nThis bonus increases by 1 at 6th level and every 3 levels thereafter.",
+    "ProcessTemplates": true
+  },
+  {
+    "Key": "LifeFont.Name",
+    "enGB": "Life Font",
+    "ProcessTemplates": false
+  },
+  {
+    "Key": "LifeAttunement.Description",
+    "enGB": "A life sensate develops an attunement to life energies emanating from the Positive Energy Plane through extensive studies into the nature of that realm. This understanding allows the sensate to tap into the water-like torrents of life energies flowing into this realm for both offensive and healing purposes. A life sensate can not access other elemental energies.",
+    "ProcessTemplates": false
+  },
+  {
+    "Key": "LifeAttunement.Name",
+    "enGB": "Life Attunement",
+    "ProcessTemplates": false
+  },
+  {
+    "Key": "EmpoweredHealing.Description",
+    "enGB": "A growing sensitivity to the life energies that emenate from the Positive Energy Plane empowers the life sensate's healing abilities.",
+    "ProcessTemplates": false
+  },
+  {
+    "Key": "EmpoweredHealing.Name",
+    "enGB": "Empowered Healing",
+    "ProcessTemplates": false
+  },
+  {
+    "Key": "HealingWildTalentSelection.Name",
+    "enGB": "Life Infused Wild Talents",
+    "ProcessTemplates": false
+  },
+  {
+    "Key": "CorrectedSupercharge.Description",
+    "enGB": "At 11th level, when using 'Gather Power' as a move action, a kineticist can reduce the total burn cost of a single infusion by 2 points instead of 1. When using gather power for 1 full round, she can reduce the burn cost of a single infusion by 3 points instead of 2.",
+    "ProcessTemplates": true
+  },
+  {
+    "Key": "CorrectedSupercharge.Name",
+    "enGB": "Supercharge",
+    "ProcessTemplates": false
+  },
+  {
+    "Key": "LingeringEnergies.Description",
+    "enGB": "Residual energies from the torrents that flow into the life sensate during rest heal burn from the sensate's abilities. The sensate will instantly heal a number of burn points per day equal to 3 plus the the sensate's Intelligence bonus modifier per rest. The life sensate does not control when these residuals are used. The energies will be used to compensate for burn if any lingering energy exists.",
+    "ProcessTemplates": true
+  },
+  {
+    "Key": "LingeringEnergies.Name",
+    "enGB": "Lingering Energies",
+    "ProcessTemplates": false
+  },
+  {
+    "Key": "LingeringEnergiesResource.Description",
+    "enGB": "Residual energies from the torrents that flow into the life sensate during rest heal burn from the sensate's abilities. The sensate will instantly heal a number of burn points per day equal to 3 plus the the sensate's Intelligence bonus modifier per rest. The life sensate does not control when these residuals are used. The energies will be used to compensate for burn if any lingering energy exists.",
+    "ProcessTemplates": true
+  },
+  {
+    "Key": "LingeringEnergiesResource.Name",
+    "enGB": "Lingering Energies Resource",
+    "ProcessTemplates": false
+  },
+  {
+    "Key": "SelectiveHealing.Description",
+    "enGB": "The life sensate has learned to better control the application of energies, allowing them to select the targets of their healing bursts.",
+    "ProcessTemplates": false
+  },
+  {
+    "Key": "SelectiveHealing.Name",
+    "enGB": "Metakinesis (Selective Healing Burst)",
+    "ProcessTemplates": false
+  },
+  {
+    "Key": "SelectiveHealingAbility.Description",
+    "enGB": "The life sensate has learned to better control the application of energies, allowing them to select the targets of their healing bursts.",
+    "ProcessTemplates": false
+  },
+  {
+    "Key": "SelectiveHealingAbility.Name",
+    "enGB": "Metakinesis (Selective Healing Burst)",
+    "ProcessTemplates": false
+  },
+  {
+    "Key": "KeenEyedAdventurer2.Name",
+    "enGB": "Keen-Eyed Adventurer (AC)",
+    "ProcessTemplates": false
+  },
+  {
+    "Key": "CantripSpecialization.Name",
+    "enGB": "Cantrip Specialization",
+    "ProcessTemplates": false
+  },
+  {
+    "Key": "CantripSpecialization.Description",
+    "enGB": "Focused research into cantrips has resulted in improved performance with some of these spells. The keen-eyed adventurer adds their intelligence bonus as damage to attacks with Ray of Frost, Jolt, Ignition, and Acid Splash.",
+    "ProcessTemplates": true
+  }
+]
+
+
