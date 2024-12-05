@@ -4,7 +4,7 @@ Misc. additions for my customized game run
 Notes:
 1. This is based on WW-Blueprint-Core (https://github.com/WittleWolfie/WW-Blueprint-Core) but I am developing on Debian so I had to make some changes to the template. 
 
-2. This is my first attempt at a Mod for Pathfinder: Wrath of the Righteous. It’s probably poorly done and has a highly likelihood of breaking your game if you implement this as is.
+2. This is my first attempt at a Mod for Pathfinder: Wrath of the Righteous. It’s probably poorly done and has a high likelihood of breaking your game if you implement this as is.
 
 3. It’s not done (Alpha stage).
 
