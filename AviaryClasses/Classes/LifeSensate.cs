@@ -14,6 +14,12 @@ using Kingmaker.Designers.Mechanics.Facts;
 using BlueprintCore.Blueprints.Configurators.UnitLogic.ActivatableAbilities;
 using Kingmaker.UnitLogic.ActivatableAbilities;
 using Kingmaker.UnitLogic.Alignments;
+using Kingmaker.Blueprints.Classes.Prerequisites;
+using Kingmaker.Utility;
+using System;
+using BlueprintCore.Blueprints.CustomConfigurators.UnitLogic.Abilities;
+using Kingmaker.UnitLogic.Abilities.Blueprints;
+using Kingmaker.Blueprints.Classes.Spells;
 
 
 
@@ -36,6 +42,7 @@ namespace AviaryClasses.Classes {
             try {
 
                 SelectiveHealing.Configure();
+                LifeBubble.Configure();
                 LingeringEnergiesResource.Configure();
                 LingeringEnergies.Configure();
                 CorrectedSupercharge.Configure();
@@ -102,7 +109,7 @@ namespace AviaryClasses.Classes {
 
                 //level 7
                 archetype.AddToAddFeatures(7, FeatureSelectionRefs.AnimalCompanionSelectionDruid.ToString());
-
+                archetype.AddToRemoveFeatures(7, FeatureSelectionRefs.SecondatyElementalFocusSelection.ToString());
                 archetype.AddToAddFeatures(7, FeatureRefs.AnimalCompanionRank.ToString());
                 archetype.AddToAddFeatures(7, FeatureRefs.AnimalCompanionRank.ToString());
                 archetype.AddToAddFeatures(7, FeatureRefs.AnimalCompanionRank.ToString());
@@ -150,8 +157,9 @@ namespace AviaryClasses.Classes {
 
                 //level 15
                 archetype.AddToAddFeatures(15, LifeFont.featGuid);
-                archetype.AddToRemoveFeatures(15, FeatureSelectionRefs.ThirdElementalFocusSelection.ToString());
+                archetype.AddToAddFeatures(15, FeatureSelectionRefs.SecondatyElementalFocusSelection.ToString());
                 archetype.AddToAddFeatures(15, FeatureRefs.AnimalCompanionRank.ToString());
+                archetype.AddToRemoveFeatures(15, FeatureSelectionRefs.ThirdElementalFocusSelection.ToString());
 
                 //level 16
                 archetype.AddToAddFeatures(16, FeatureSelectionRefs.InfusionSelection.ToString());
@@ -239,6 +247,7 @@ namespace AviaryClasses.Classes {
                 featureSelection.AddToAllFeatures(FeatureRefs.SkilledKineticistFeature.ToString());
                 featureSelection.AddToAllFeatures(FeatureSelectionRefs.ElementalWhispersSelection.ToString());
                 featureSelection.AddToAllFeatures(FeatureRefs.SlickFeature.ToString());
+                featureSelection.AddToAllFeatures(LifeBubble.featGuid);
                 //featureSelection.AddToAllFeatures(SelectiveHealing.featGuid);
                 featureSelection.AddToAllFeatures(FeatureSelectionRefs.WildTalentBonusFeatWater.ToString());
                 featureSelection.AddToAllFeatures(FeatureSelectionRefs.WildTalentBonusFeatWater1.ToString());
@@ -281,6 +290,82 @@ namespace AviaryClasses.Classes {
                     feature.Configure();
 
                 }
+
+            } catch (Exception ex) {
+                Logger.Error(ex.ToString());
+            }
+
+        }
+
+    }
+
+
+        public class LifeBubble {
+
+        private static readonly LogWrapper Logger = LogWrapper.Get("LifeBubble");
+
+        public static readonly string featName = "LifeBubble";
+        public static readonly string featGuid = "a09e1d2b-88f4-4378-8f34-a030cf9483c7";
+        public static readonly string abilityName = "LifeBubbleAbility";
+        public static readonly string abilityGuid = "6094a64d-8773-4e39-bddd-8da375bd3fd7";
+
+
+
+        public static void Configure() {
+
+            try {
+
+                BlueprintAbility baseAbility = BlueprintTool.Get<BlueprintAbility>(AbilityRefs.ResistEnergyCommunal.ToString());
+
+                BlueprintAbility fireAbility = AbilityConfigurator.New("LifeBubbleResistFire", "6552f952-523b-42ea-a94a-0209ea08a821").CopyFrom(AbilityRefs.ResistFireCommunal.ToString(), x => true)
+                .SetDisplayName(featName + "Fire.Name")
+                .SetDescription(featName + ".Description")
+                .AddAbilityAcceptBurnOnCast(1)
+                .Configure();
+
+                BlueprintAbility acidAbility = AbilityConfigurator.New("LifeBubbleResistAcid", "ec3408c9-fda9-40d6-aa6b-72e10d053616").CopyFrom(AbilityRefs.ResistAcidCommunal.ToString(), x => true)
+                .SetDisplayName(featName + "Acid.Name")
+                .SetDescription(featName + ".Description")
+                .AddAbilityAcceptBurnOnCast(1)
+                .Configure();
+
+                BlueprintAbility coldAbility = AbilityConfigurator.New("LifeBubbleResistCold", "025f3549-00cf-41a5-b14f-782a3bd54ca9").CopyFrom(AbilityRefs.ResistColdCommunal.ToString(), x => true)
+                .SetDisplayName(featName + "Cold.Name")
+                .SetDescription(featName + ".Description")
+                .AddAbilityAcceptBurnOnCast(1)
+                .Configure();
+
+                BlueprintAbility elecAbility = AbilityConfigurator.New("LifeBubbleResistElec", "2b66f785-a2d9-4c1f-b4d3-3744f4fdd981").CopyFrom(AbilityRefs.ResistElectricityCommunal.ToString(), x => true)
+                .SetDisplayName(featName + "Elec.Name")
+                .SetDescription(featName + ".Description")
+                .AddAbilityAcceptBurnOnCast(1)
+                .Configure();
+
+                BlueprintAbility sonicAbility = AbilityConfigurator.New("LifeBubbleResistSonic", "221c7859-e10e-4603-9413-fd1da916ef4a").CopyFrom(AbilityRefs.ResistSonicCommunal.ToString(), x => true)
+                .SetDisplayName(featName + "Sonic.Name")
+                .SetDescription(featName + ".Description")
+                .AddAbilityAcceptBurnOnCast(1)
+                .Configure();
+     
+                BlueprintAbility ability = AbilityConfigurator.New(abilityName, abilityGuid)
+                .SetDisplayName(featName + ".Name")
+                .SetDescription(featName + ".Description")
+                .AddAbilityVariants([fireAbility, acidAbility, coldAbility, elecAbility, sonicAbility])
+                .SetIcon(baseAbility.m_Icon)
+                .Configure();
+
+                FeatureConfigurator feature = FeatureConfigurator.New(featName, featGuid, FeatureGroup.KineticWildTalent);
+
+                feature.SetDescription(featName + ".Description")
+                .AddKineticistAcceptBurnTrigger()
+                .SetDisplayName(featName + ".Name")
+                .SetIsClassFeature(true)
+                .SetIcon(baseAbility.m_Icon)
+                .AddKineticistAcceptBurnTrigger()
+                .AddPrerequisiteArchetypeLevel(LifeSensate.featGuid, CharacterClassRefs.KineticistClass.ToString(), level: 5)
+                .AddFacts(new() { ability })
+                .Configure();
+
 
             } catch (Exception ex) {
                 Logger.Error(ex.ToString());
@@ -513,8 +598,7 @@ namespace AviaryClasses.Classes {
                     featGuid // Unique GUID for the resource
                 )
                 .SetMaxAmount(
-                    //ResourceAmountBuilder.New(3).IncreaseByLevel([CharacterClassRefs.KineticistClass.ToString()], 1)
-                    ResourceAmountBuilder.New(3).IncreaseByStat(StatType.Intelligence)
+                    ResourceAmountBuilder.New(0).IncreaseByStat(StatType.Intelligence)
                 )
                 .SetUseMax(true) // Enforce max size
                 .Configure();
@@ -705,3 +789,107 @@ namespace AviaryClasses.Classes {
                     //BlueprintArchetype darkArchetype = BlueprintTool.Get<BlueprintArchetype>(ArchetypeRefs.DarkElementalistArchetype.ToString());
                 //UnitPartKineticist part = darkArchetype.GetComponent<UnitPartKineticist>();
                 //part.m_Settings.MainStat = StatType.Intelligence;
+
+
+
+                    // FeatureConfigurator.For(FeatureRefs.ExtendedRangeInfusion.ToString())
+                    //     .EditComponent<PrerequisiteFeature>(c => c.m_Feature.)
+                    //     .Configure();
+                  
+                    //BlueprintFeature baseFeature = BlueprintTool.Get<BlueprintFeature>(FeatureRefs.ExtendedRangeInfusion.ToString());
+                    //baseFeature.Components.Remove<PrerequisiteFeature>(PrerequisiteFeature, c => ((PrerequisiteFeature)c).m_Feature = elementalFocusSelection);
+                     //baseFeature.Components.RemoveAll( c => c.GetType() == typeof(PrerequisiteFeature));
+    //             // List<BlueprintComponent> components = baseFeature.CollectComponents();
+
+
+
+
+
+    //  public class TorrentFocusSelection {
+
+    //     private static readonly LogWrapper Logger = LogWrapper.Get("TorrentFocusSelection");
+
+    //     public static readonly string featName = "TorrentFocusSelection";
+    //     public static readonly string featGuid = "990fc568-9c0b-41e2-9764-1c6406370d81";
+
+
+    //     public static void Configure() {
+
+    //         try {
+
+    //             FeatureConfigurator feature = Utils.CopyFromFeature(FeatureSelectionRefs.ElementalFocusSelection.ToString(), featName, featGuid);
+
+    //             if (feature != null) {
+
+    //                 feature.SetDescription(featName + ".Description");
+    //                 feature.SetDisplayName(featName + ".Name");
+
+    //                 feature.AddToIsPrerequisiteFor (FeatureRefs.CloudInfusion.ToString());
+    //                 feature.AddToIsPrerequisiteFor (FeatureRefs.CycloneInfusion.ToString());
+    //                 feature.AddToIsPrerequisiteFor (FeatureRefs.ExtendedRangeInfusion.ToString());
+    //                 feature.AddToIsPrerequisiteFor (FeatureRefs.FragmentationInfusion.ToString());
+    //                 feature.AddToIsPrerequisiteFor (FeatureRefs.SpindleInfusion.ToString());
+    //                 feature.AddToIsPrerequisiteFor (FeatureRefs.SprayInfusion.ToString());
+    //                 feature.AddToIsPrerequisiteFor (FeatureRefs.WallInfusion.ToString());
+    //                 feature.AddToIsPrerequisiteFor (FeatureRefs.TorrentInfusionFeature.ToString());
+
+    //                 feature.Configure();
+
+    //                 FeatureConfigurator.For(FeatureRefs.ExtendedRangeInfusion.ToString()).RemoveComponents (c => c.GetType() == typeof(PrerequisiteFeature)).Configure();
+    //                 FeatureConfigurator.For(FeatureRefs.CloudInfusion.ToString()).RemoveComponents (c => c.GetType() == typeof(PrerequisiteFeature)).Configure();
+    //                 FeatureConfigurator.For(FeatureRefs.CycloneInfusion.ToString()).RemoveComponents (c => c.GetType() == typeof(PrerequisiteFeature)).Configure();
+    //                 FeatureConfigurator.For(FeatureRefs.FragmentationInfusion.ToString()).RemoveComponents (c => c.GetType() == typeof(PrerequisiteFeature)).Configure();
+    //                 FeatureConfigurator.For(FeatureRefs.SpindleInfusion.ToString()).RemoveComponents (c => c.GetType() == typeof(PrerequisiteFeature)).Configure();
+    //                 FeatureConfigurator.For(FeatureRefs.SprayInfusion.ToString()).RemoveComponents (c => c.GetType() == typeof(PrerequisiteFeature)).Configure();
+    //                 FeatureConfigurator.For(FeatureRefs.WallInfusion.ToString()).RemoveComponents (c => c.GetType() == typeof(PrerequisiteFeature)).Configure();
+    //                 FeatureConfigurator.For(FeatureRefs.TorrentInfusionFeature.ToString()).RemoveComponents (c => c.GetType() == typeof(PrerequisiteFeature)).Configure();
+
+    //                 FeatureConfigurator.For(FeatureRefs.ExtendedRangeInfusion.ToString()).AddPrerequisiteFeaturesFromList([featGuid, FeatureSelectionRefs.ElementalFocusSelection.ToString()]).Configure();
+    //                 FeatureConfigurator.For(FeatureRefs.CloudInfusion.ToString()).AddPrerequisiteFeaturesFromList([featGuid, FeatureSelectionRefs.ElementalFocusSelection.ToString()]).Configure();
+    //                 FeatureConfigurator.For(FeatureRefs.CycloneInfusion.ToString()).AddPrerequisiteFeaturesFromList([featGuid, FeatureSelectionRefs.ElementalFocusSelection.ToString()]).Configure();
+    //                 FeatureConfigurator.For(FeatureRefs.FragmentationInfusion.ToString()).AddPrerequisiteFeaturesFromList([featGuid, FeatureSelectionRefs.ElementalFocusSelection.ToString()]).Configure();
+    //                 FeatureConfigurator.For(FeatureRefs.SpindleInfusion.ToString()).AddPrerequisiteFeaturesFromList([featGuid, FeatureSelectionRefs.ElementalFocusSelection.ToString()]).Configure();
+    //                 FeatureConfigurator.For(FeatureRefs.SprayInfusion.ToString()).AddPrerequisiteFeaturesFromList([featGuid, FeatureSelectionRefs.ElementalFocusSelection.ToString()]).Configure();
+    //                 FeatureConfigurator.For(FeatureRefs.WallInfusion.ToString()).AddPrerequisiteFeaturesFromList([featGuid, FeatureSelectionRefs.ElementalFocusSelection.ToString()]).Configure();
+    //                 FeatureConfigurator.For(FeatureRefs.TorrentInfusionFeature.ToString()).AddPrerequisiteFeaturesFromList([featGuid, FeatureSelectionRefs.ElementalFocusSelection.ToString()]).Configure();
+
+    //             }
+
+    //         } catch (Exception ex) {
+    //             Logger.Error(ex.ToString());
+    //         }
+
+    //     }
+
+    // }
+
+    // public class SecondTorrentFocusSelection {
+
+    //     private static readonly LogWrapper Logger = LogWrapper.Get("SecondTorrentFocusSelection");
+
+    //     public static readonly string featName = "SecondTorrentFocusSelection";
+    //     public static readonly string featGuid = "927a3e41-25cb-4fd2-b35c-5baed6065051";
+
+
+    //     public static void Configure() {
+
+    //         try {
+
+    //             FeatureConfigurator feature = Utils.CopyFromFeature(FeatureSelectionRefs.SecondatyElementalFocusSelection.ToString(), featName, featGuid);
+
+    //             if (feature != null) {
+
+    //                 feature.SetDescription(featName + ".Description");
+    //                 feature.SetDisplayName(featName + ".Name");
+
+    //                 feature.Configure();
+
+    //             }
+
+    //         } catch (Exception ex) {
+    //             Logger.Error(ex.ToString());
+    //         }
+
+    //     }
+
+    // }

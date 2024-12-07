@@ -86,7 +86,7 @@
   },
   {
     "Key": "LingeringEnergies.Description",
-    "enGB": "Residual energies from the torrents that flow into the life sensate during rest heal burn from the sensate's abilities. The sensate will instantly heal a number of burn points per day equal to 3 plus the the sensate's Intelligence bonus modifier per rest. The life sensate does not control when these residuals are used. The energies will be used to compensate for burn if any lingering energy exists.",
+    "enGB": "Residual energies from the torrents that flow into the life sensate during rest heal burn from the sensate's abilities. The sensate will instantly heal a number of burn points per day equal to the the sensate's Intelligence bonus modifier per rest. The life sensate does not control when these residuals are used. The energies will be used to compensate for burn if any lingering energy exists.",
     "ProcessTemplates": true
   },
   {
@@ -96,7 +96,7 @@
   },
   {
     "Key": "LingeringEnergiesResource.Description",
-    "enGB": "Residual energies from the torrents that flow into the life sensate during rest heal burn from the sensate's abilities. The sensate will instantly heal a number of burn points per day equal to 3 plus the the sensate's Intelligence bonus modifier per rest. The life sensate does not control when these residuals are used. The energies will be used to compensate for burn if any lingering energy exists.",
+    "enGB": "Residual energies from the torrents that flow into the life sensate during rest heal burn from the sensate's abilities. The sensate will instantly heal a number of burn points per day equal to the the sensate's Intelligence bonus modifier per rest. The life sensate does not control when these residuals are used. The energies will be used to compensate for burn if any lingering energy exists.",
     "ProcessTemplates": true
   },
   {
@@ -138,6 +138,61 @@
     "Key": "CantripSpecialization.Description",
     "enGB": "Focused research into cantrips has resulted in improved performance with some of these spells. The keen-eyed adventurer adds their intelligence bonus as damage to attacks with Ray of Frost, Jolt, Ignition, and Acid Splash.",
     "ProcessTemplates": true
+  },
+  {
+    "Key": "TorrentFocusSelection.Name",
+    "enGB": "Torrent Selection",
+    "ProcessTemplates": false
+  },
+  {
+    "Key": "TorrentFocusSelection.Description",
+    "enGB": "At 1st level, a life sensate chooses which aspect of the torrents of life energy that flow into this plane that they will develop. They gain Shroud of Water as a bonus wild talent.",
+    "ProcessTemplates": true
+  },
+  {
+    "Key": "SecondTorrentFocusSelection.Name",
+    "enGB": "Torrent Mastery",
+    "ProcessTemplates": false
+  },
+  {
+    "Key": "SecondTorrentFocusSelection.Description",
+    "enGB": "At 15th level, a life sensate masters the totality of the torrents of life energy that flow into this plane.",
+    "ProcessTemplates": true
+  },
+  {
+    "Key": "LifeBubble.Name",
+    "enGB": "Life Bubble",
+    "ProcessTemplates": false
+  },
+  {
+    "Key": "LifeBubble.Description",
+    "enGB": "The life sensate may accept 1 burn to focus their energies into a shield that grants all allies within a 25-foot radius limited protection from damage of whichever one of five energy types you select: acid, cold, electricity, fire, or sonic. The subject gains resist energy 10 against the energy type chosen, meaning that each time the creature is subjected to such damage (whether from a natural or magical source), that damage is reduced by 10 points before being applied to the creature's hit points. The value of the energy resistance granted increases to 20 points at 7th level and to a maximum of 30 points at 11th level.",
+    "ProcessTemplates": true
+  },
+  {
+    "Key": "LifeBubbleFire.Name",
+    "enGB": "Life Bubble, Resist Fire",
+    "ProcessTemplates": false
+  },
+  {
+    "Key": "LifeBubbleAcid.Name",
+    "enGB": "Life Bubble, Resist Acid",
+    "ProcessTemplates": false
+  },
+  {
+    "Key": "LifeBubbleCold.Name",
+    "enGB": "Life Bubble, Resist Cold",
+    "ProcessTemplates": false
+  },
+  {
+    "Key": "LifeBubbleSonic.Name",
+    "enGB": "Life Bubble, Resist Sonic",
+    "ProcessTemplates": false
+  },
+  {
+    "Key": "LifeBubbleElec.Name",
+    "enGB": "Life Bubble, Resist Electricity",
+    "ProcessTemplates": false
   }
 ]
 
