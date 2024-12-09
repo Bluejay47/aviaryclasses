@@ -2,10 +2,15 @@
 using BlueprintCore.Blueprints.References;
 using Kingmaker.EntitySystem.Stats;
 using BlueprintCore.Utils;
-using BlueprintCore.Blueprints.CustomConfigurators.Classes.Selection;
+using BlueprintCore.Utils.Types;
 using Kingmaker.Blueprints.Classes;
-using Kingmaker.Blueprints;
 using BlueprintCore.Blueprints.CustomConfigurators;
+using Kingmaker.UnitLogic.Mechanics.Components;
+using Kingmaker.Enums;
+using Kingmaker.UnitLogic.Mechanics.Properties;
+using BlueprintCore.Blueprints.Configurators.Classes;
+using BlueprintCore.Blueprints.CustomConfigurators.Classes.Selection;
+using Kingmaker.Blueprints;
 using BlueprintCore.Actions.Builder;
 using BlueprintCore.Actions.Builder.ContextEx;
 using Kingmaker.UnitLogic.Abilities;
@@ -22,17 +27,13 @@ using Kingmaker.UnitLogic.Abilities.Blueprints;
 using Kingmaker.Blueprints.Classes.Spells;
 
 
-
 namespace AviaryClasses.Classes {
-    /// <summary>
-    /// New Kineticist class
-    /// </summary>
+
     public class LifeSensate {
 
         private static readonly LogWrapper Logger = LogWrapper.Get("LifeSensate");
 
         public static BlueprintArchetype archetypeRef;
-
         public static readonly string featName = "LifeSensate";
         public static readonly string featGuid = "9690f4ec-a4ad-4a9c-aaee-56251fbbea3c";
 
@@ -52,23 +53,17 @@ namespace AviaryClasses.Classes {
                 LifeStudies.Configure();
                 LifeFont.Configure();
 
-                ArchetypeConfigurator archetype = ArchetypeConfigurator.New(LifeSensate.featName, LifeSensate.featGuid, CharacterClassRefs.KineticistClass); //.CopyFrom(ArchetypeRefs.DarkElementalistArchetype.ToString(), x => false);
-                ArchetypeConfigurator darkArchetype = ArchetypeConfigurator.For(ArchetypeRefs.DarkElementalistArchetype);
-
-                // archetype.EditComponents<AddKineticistPart>(
-                //     c => c.MainStat = StatType.Intelligence,
-                //     x => true
-                // );
+                ArchetypeConfigurator archetype = ArchetypeConfigurator.New(LifeSensate.featName, LifeSensate.featGuid, CharacterClassRefs.KineticistClass);
 
                 archetype.EditComponents<AddKineticistPart>(
                     c => c.MainStat = StatType.Intelligence,
                     x => true
                 );
 
-                archetype.SetBaseAttackBonus(StatProgressionRefs.BABMedium.ToString()); //4c936de4249b61e419a3fb775b9f2581
-                archetype.SetFortitudeSave(StatProgressionRefs.SavesLow.ToString()); //dc0c7c1aba755c54f96c089cdf7d14a3
-                archetype.SetReflexSave(StatProgressionRefs.SavesLow.ToString()); //dc0c7c1aba755c54f96c089cdf7d14a3
-                archetype.SetWillSave(StatProgressionRefs.SavesHigh.ToString()); //ff4662bde9e75f145853417313842751
+                archetype.SetBaseAttackBonus(StatProgressionRefs.BABMedium.ToString()); 
+                archetype.SetFortitudeSave(StatProgressionRefs.SavesLow.ToString()); 
+                archetype.SetReflexSave(StatProgressionRefs.SavesLow.ToString()); 
+                archetype.SetWillSave(StatProgressionRefs.SavesHigh.ToString()); 
 
                 archetype.SetLocalizedName(featName + ".Name");
                 archetype.SetLocalizedDescription(featName + ".Description");
@@ -202,8 +197,6 @@ namespace AviaryClasses.Classes {
                     StatType.Dexterity
                 );
 
-                archetype.SetBuildChanging(true);
-
                 LifeSensate.archetypeRef = archetype.Configure();
 
                 FeatureConfigurator.For(ProgressionRefs.ElementalFocusAir_0.ToString()).AddPrerequisiteNoArchetype(LifeSensate.featGuid, CharacterClassRefs.KineticistClass.ToString()).Configure();
@@ -300,7 +293,7 @@ namespace AviaryClasses.Classes {
     }
 
 
-        public class LifeBubble {
+    public class LifeBubble {
 
         private static readonly LogWrapper Logger = LogWrapper.Get("LifeBubble");
 
@@ -321,6 +314,7 @@ namespace AviaryClasses.Classes {
                 .SetDisplayName(featName + "Fire.Name")
                 .SetDescription(featName + ".Description")
                 .AddAbilityAcceptBurnOnCast(1)
+                //.AddSpellLevelByClassLevel(clazz: CharacterClassRefs.KineticistClass.ToString())
                 .Configure();
 
                 BlueprintAbility acidAbility = AbilityConfigurator.New("LifeBubbleResistAcid", "ec3408c9-fda9-40d6-aa6b-72e10d053616").CopyFrom(AbilityRefs.ResistAcidCommunal.ToString(), x => true)
@@ -357,7 +351,6 @@ namespace AviaryClasses.Classes {
                 FeatureConfigurator feature = FeatureConfigurator.New(featName, featGuid, FeatureGroup.KineticWildTalent);
 
                 feature.SetDescription(featName + ".Description")
-                .AddKineticistAcceptBurnTrigger()
                 .SetDisplayName(featName + ".Name")
                 .SetIsClassFeature(true)
                 .SetIcon(baseAbility.m_Icon)
@@ -546,8 +539,6 @@ namespace AviaryClasses.Classes {
 
                 BlueprintFeature baseFeature = BlueprintTool.Get<BlueprintFeature>(FeatureRefs.SelectiveSpellFeat.ToString());
 
-                //AbilityConfigurator.For(AbilityRefs.HealingBurstAbility).AddMetamagicFeat(metamagic: Metamagic.Selective).Configure();
-
                 BlueprintActivatableAbility ability = ActivatableAbilityConfigurator.New(abilityName, abilityGuid)
                 .SetDisplayName(featName + ".Name")
                 .SetDescription(featName + ".Description")
@@ -556,7 +547,7 @@ namespace AviaryClasses.Classes {
                     [
                         AbilityRefs.HealingBurstAbility.ToString()
                     ]
-                    , null, null, null, null, null, 20, Metamagic.Selective
+                    ,null, null, null, null, null, 20, Metamagic.Selective
                 )
                 .Configure();
 
