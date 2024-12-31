@@ -61,7 +61,7 @@
   },
   {
     "Key": "EmpoweredHealing.Description",
-    "enGB": "A growing sensitivity to the life energies that emenate from the Positive Energy Plane empowers the life sensate's healing abilities.",
+    "enGB": "A growing sensitivity to the life energies that emenate from the Positive Energy Plane empowers the life sensate's healing abilities. The life sensate's Kinetic Healer and Healing Burst abilities are now empowered as per the Empower metamagic. ",
     "ProcessTemplates": false
   },
   {
@@ -136,7 +136,7 @@
   },
   {
     "Key": "CantripSpecialization.Description",
-    "enGB": "Focused research into cantrips has resulted in improved performance with some of these spells. The keen-eyed adventurer adds their intelligence bonus as damage to attacks with Ray of Frost, Jolt, Ignition, and Acid Splash.",
+    "enGB": "Focus, perception, and a keen-eye are the hallmarks of good adventurers. It's amazing what one can do when these attributes are applied to something as simple as cantrips. The keen-eyed adventurer adds their intelligence bonus as damage to attacks with Ray of Frost, Jolt, Ignition, and Acid Splash. Cantrip Specialization is replaced by Cantrip Mastery at archetype level 20.",
     "ProcessTemplates": true
   },
   {
@@ -193,7 +193,36 @@
     "Key": "LifeBubbleElec.Name",
     "enGB": "Life Bubble, Resist Electricity",
     "ProcessTemplates": false
+  },
+  {
+    "Key": "OverpoweredCantrips.Name",
+    "enGB": "Metamagic? (Bolstered Cantrips)",
+    "ProcessTemplates": false
+  },
+  {
+    "Key": "OverpoweredCantrips.Description",
+    "enGB": "Through extensive trial and error with cantrips, the keen-eyed adventurer learns to imbue additional power into their Jolt, Ignition, Ray of Frost and Acid Splash cantrips. When enabled, these cantrips deal 1 extra point of damage per dice rolled and have the ability to ricochet to other targets.\nBenefit: Deal 1 extra point of damage per damage dice rolled. 1 to 3 additional targets within 20 feet of the main target may take ricochet damage.",
+    "ProcessTemplates": true
+  },
+  {
+    "Key": "KineticHealerBuff.Name",
+    "enGB": "Expanded Healing",
+    "ProcessTemplates": false
+  },
+  {
+    "Key": "KineticHealerBuff.Description",
+    "enGB": "Through continued intensive studies the life sensate has learned to make the most of their healing capabilties. The life sensate's Kinetic Healer ability is now maximized as per the Maximize metamagic and also immediately ends any and all of the following adverse conditions affecting the target: ability damage, blinded, confused, dazed, dazzles, diseased, exhausted, fatigued, nauseated, poisoned, sickened, and stunned.",
+    "ProcessTemplates": true
+  },
+  {
+    "Key": "HealingBurstBuff.Name",
+    "enGB": "Ultimate Healing",
+    "ProcessTemplates": false
+  },
+  {
+    "Key": "HealingBurstBuff.Description",
+    "enGB": "Through continued intensive studies the life sensate has learned to make the most of their healing capabilties. The life sensate's Healing Burst ability is now maximized as per the Maximize metamagic and also immediately ends any and all of the following adverse conditions affecting the target: ability damage, blinded, confused, dazed, dazzles, diseased, exhausted, fatigued, nauseated, poisoned, sickened, and stunned.",
+    "ProcessTemplates": true
   }
 ]
-
 

@@ -32,6 +32,9 @@ using Kingmaker.RuleSystem;
 using BlueprintCore.Actions.Builder.BasicEx;
 using Kingmaker.Enums.Damage;
 using Kingmaker.Designers.EventConditionActionSystem.Evaluators;
+using BlueprintCore.Blueprints.Configurators.Items;
+using Kingmaker.Designers.Mechanics.Facts;
+using Kingmaker.Blueprints;
 
 
 
@@ -79,10 +82,28 @@ namespace AviaryClasses.Classes {
                 archetype.AddToAddFeatures(20, FeatureRefs.AnimalCompanionRank.ToString());
                 archetype.RemoveFromAddFeatures(20, [CantripSpecialization.featGuid]);
 
-                //LevelEntryBuilder levelBuilder = new LevelEntryBuilder();
-
-
                 archetypeRef = archetype.Configure();
+
+                //Fix for Charlatan's Necklace not working with Ignition
+                BlueprintAbilityReference ignitionRef = BlueprintTool.GetRef<BlueprintAbilityReference>(AbilityRefs.Ignition.ToString());
+
+                FeatureConfigurator.For("08d677d6ed2c49b469e7bd1385826dc9")
+                .EditComponent<AutoMetamagic>(
+                    c => c.Abilities.Add(ignitionRef)
+                )
+                .Configure();
+
+                FeatureConfigurator.For("e2efab2d89e6e1a4993c81a6b098e670")
+                .EditComponent<AutoMetamagic>(
+                    c => c.Abilities.Add(ignitionRef)
+                )
+                .Configure();
+
+                FeatureConfigurator.For("9dcf0f276f741474cab1a6ad771c06a7")
+                .EditComponent<AutoMetamagic>(
+                    c => c.Abilities.Add(ignitionRef)
+                )
+                .Configure();
 
             } catch (Exception ex) {
                 Logger.Error(ex.ToString());

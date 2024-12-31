@@ -25,6 +25,22 @@ using System;
 using BlueprintCore.Blueprints.CustomConfigurators.UnitLogic.Abilities;
 using Kingmaker.UnitLogic.Abilities.Blueprints;
 using Kingmaker.Blueprints.Classes.Spells;
+using BlueprintCore.Blueprints.CustomConfigurators.UnitLogic.Buffs;
+using BlueprintCore.Conditions.Builder;
+using BlueprintCore.Conditions.Builder.ContextEx;
+using BlueprintCore.Utils.Assets;
+using Kingmaker.UnitLogic.Abilities.Components;
+using Kingmaker.ElementsSystem;
+using Kingmaker.Blueprints.Classes.Selection;
+using Kingmaker.UnitLogic.Buffs.Blueprints;
+using Kingmaker.UnitLogic.FactLogic;
+using Kingmaker.RuleSystem.Rules.Damage;
+using Kingmaker.UnitLogic.Mechanics;
+using Kingmaker.RuleSystem;
+using BlueprintCore.Actions.Builder.BasicEx;
+using Kingmaker.Enums.Damage;
+using Kingmaker.Designers.EventConditionActionSystem.Evaluators;
+
 
 
 namespace AviaryClasses.Classes {
@@ -52,6 +68,8 @@ namespace AviaryClasses.Classes {
                 LifeAttunement.Configure();
                 LifeStudies.Configure();
                 LifeFont.Configure();
+                KineticHealerBuff.Configure();
+                HealingBurstBuff.Configure();
 
                 ArchetypeConfigurator archetype = ArchetypeConfigurator.New(LifeSensate.featName, LifeSensate.featGuid, CharacterClassRefs.KineticistClass);
 
@@ -91,22 +109,22 @@ namespace AviaryClasses.Classes {
                 //level 4
                 archetype.AddToAddFeatures(4, FeatureSelectionRefs.InfusionSelection.ToString());
                 archetype.AddToRemoveFeatures(4, FeatureSelectionRefs.WildTalentSelection.ToString());
+                archetype.AddToAddFeatures(4, FeatureSelectionRefs.AnimalCompanionSelectionDruid.ToString());
 
                 //level 5
                 archetype.AddToAddFeatures(5, FeatureRefs.OverwhelmingSoulMentalProwessAdditionalUseFeature.ToString());
                 archetype.AddToRemoveFeatures(5, FeatureSelectionRefs.InfusionSelection.ToString());
                 archetype.AddToAddFeatures(5, HealingWildTalentSelection.featGuid);
+                archetype.AddToAddFeatures(5, FeatureRefs.AnimalCompanionRank.ToString());
 
                 //level 6
                 archetype.AddToAddFeatures(6, LifeFont.featGuid);
                 archetype.AddToAddFeatures(6, EmpoweredHealing.featGuid);
                 archetype.AddToRemoveFeatures(6, FeatureSelectionRefs.WildTalentSelection.ToString());
+                archetype.AddToAddFeatures(6, FeatureRefs.AnimalCompanionRank.ToString());
 
                 //level 7
-                archetype.AddToAddFeatures(7, FeatureSelectionRefs.AnimalCompanionSelectionDruid.ToString());
                 archetype.AddToRemoveFeatures(7, FeatureSelectionRefs.SecondatyElementalFocusSelection.ToString());
-                archetype.AddToAddFeatures(7, FeatureRefs.AnimalCompanionRank.ToString());
-                archetype.AddToAddFeatures(7, FeatureRefs.AnimalCompanionRank.ToString());
                 archetype.AddToAddFeatures(7, FeatureRefs.AnimalCompanionRank.ToString());
 
                 //level 8
@@ -149,10 +167,12 @@ namespace AviaryClasses.Classes {
                 archetype.AddToAddFeatures(14, FeatureRefs.OverwhelmingSoulMentalProwessAdditionalUseFeature.ToString());
                 archetype.AddToRemoveFeatures(14, FeatureSelectionRefs.WildTalentSelection.ToString());
                 archetype.AddToAddFeatures(14, FeatureRefs.AnimalCompanionRank.ToString());
+                archetype.AddToAddFeatures(14, KineticHealerBuff.featGuid);
 
                 //level 15
                 archetype.AddToAddFeatures(15, LifeFont.featGuid);
                 archetype.AddToAddFeatures(15, FeatureSelectionRefs.SecondatyElementalFocusSelection.ToString());
+                archetype.AddToAddFeatures(15, FeatureSelectionRefs.WaterBlastSelection.ToString());
                 archetype.AddToAddFeatures(15, FeatureRefs.AnimalCompanionRank.ToString());
                 archetype.AddToRemoveFeatures(15, FeatureSelectionRefs.ThirdElementalFocusSelection.ToString());
 
@@ -172,6 +192,7 @@ namespace AviaryClasses.Classes {
                 archetype.AddToAddFeatures(18, FeatureRefs.OverwhelmingSoulMentalProwessAdditionalUseFeature.ToString());
                 archetype.AddToRemoveFeatures(18, FeatureSelectionRefs.WildTalentSelection.ToString());
                 archetype.AddToAddFeatures(18, FeatureRefs.AnimalCompanionRank.ToString());
+                archetype.AddToAddFeatures(18, HealingBurstBuff.featGuid);
 
                 //level 19
                 archetype.AddToRemoveFeatures(19, FeatureSelectionRefs.InfusionSelection.ToString());
@@ -251,6 +272,123 @@ namespace AviaryClasses.Classes {
 
                 featureSelection.Configure();
 
+            } catch (Exception ex) {
+                Logger.Error(ex.ToString());
+            }
+
+        }
+
+    }
+
+
+    public class KineticHealerBuff {
+
+        private static readonly LogWrapper Logger = LogWrapper.Get("KineticHealerBuff");
+
+        public static readonly string featName = "KineticHealerBuff";
+        public static readonly string featGuid = "c80abc3e-5cf9-484f-9a38-edb70699e1b5";
+
+
+        public static void Configure() {
+
+            try {
+
+                FeatureConfigurator feature = FeatureConfigurator.New(featName, featGuid);
+
+                feature.SetDescription(featName + ".Description");
+                feature.SetDisplayName(featName + ".Name");
+                feature.SetIsClassFeature(true);
+                feature.AddAutoMetamagic(
+                    [
+                        AbilityRefs.KineticHealerAbility.ToString(),
+                        AbilityRefs.HealingBurstAbility.ToString()
+                    ]
+                    , null, null, null, null, null, 20, Metamagic.Maximize
+                );
+                feature.Configure();
+
+
+                AbilityConfigurator.For(AbilityRefs.KineticHealerAbility.ToString())
+                .AddAbilityEffectRunAction(ActionsBuilder.New().RemoveBuff(BuffRefs.DazeBuff.ToString()))
+                .AddAbilityEffectRunAction(ActionsBuilder.New().RemoveBuff(BuffRefs.Stunned.ToString()))
+                .AddAbilityEffectRunAction(ActionsBuilder.New().RemoveBuff(BuffRefs.BlindnessBuff.ToString()))
+                .AddAbilityEffectRunAction(ActionsBuilder.New().RemoveBuff(BuffRefs.GlitterdustBlindnessBuff.ToString()))
+                .AddAbilityEffectRunAction(ActionsBuilder.New().RemoveBuff(BuffRefs.DazzledBuff.ToString()))
+                .AddAbilityEffectRunAction(ActionsBuilder.New().RemoveBuff(BuffRefs.InsanityBuff.ToString()))
+                .AddAbilityEffectRunAction(ActionsBuilder.New().RemoveBuff(BuffRefs.FeeblemindBuff.ToString()))
+                .AddAbilityEffectRunAction(ActionsBuilder.New().RemoveBuff(BuffRefs.Ecorche_Buff_SeizeSkin.ToString()))
+                .AddAbilityEffectRunAction(ActionsBuilder.New().RemoveBuff(BuffRefs.Confusion.ToString()))
+                .AddAbilityEffectRunAction(ActionsBuilder.New().RemoveBuff(BuffRefs.Fatigued.ToString()))
+                .AddAbilityEffectRunAction(ActionsBuilder.New().RemoveBuff(BuffRefs.Exhausted.ToString()))
+                .AddAbilityEffectRunAction(ActionsBuilder.New().RemoveBuff(BuffRefs.Nauseated.ToString()))
+                .AddAbilityEffectRunAction(ActionsBuilder.New().RemoveBuff(BuffRefs.PoisonBuff.ToString()))
+                .AddAbilityEffectRunAction(ActionsBuilder.New().RemoveBuff(BuffRefs.Sickened.ToString()))
+                .AddAbilityEffectRunAction(ActionsBuilder.New()
+                    .RemoveBuffsByDescriptor(
+                        new SpellDescriptorWrapper(SpellDescriptor.StatDebuff)
+                    )
+                )
+                .Configure();
+             
+            } catch (Exception ex) {
+                Logger.Error(ex.ToString());
+            }
+
+        }
+
+    }
+
+
+        public class HealingBurstBuff {
+
+        private static readonly LogWrapper Logger = LogWrapper.Get("HealingBurstBuff");
+
+        public static readonly string featName = "HealingBurstBuff";
+        public static readonly string featGuid = "71b4f75a-1d20-4653-89a5-90ce257d0cbc";
+
+
+        public static void Configure() {
+
+            try {
+
+                FeatureConfigurator feature = FeatureConfigurator.New(featName, featGuid);
+
+                feature.SetDescription(featName + ".Description");
+                feature.SetDisplayName(featName + ".Name");
+                feature.SetIsClassFeature(true);
+                feature.AddAutoMetamagic(
+                    [
+                        AbilityRefs.HealingBurstAbility.ToString()
+                    ]
+                    , null, null, null, null, null, 20, Metamagic.Maximize
+                );
+                feature.Configure();
+
+                AbilityConfigurator.For(AbilityRefs.HealingBurstAbility.ToString())
+                .AddAbilityEffectRunAction(ActionsBuilder.New().RemoveBuff(BuffRefs.DazeBuff.ToString()))
+                .AddAbilityEffectRunAction(ActionsBuilder.New().RemoveBuff(BuffRefs.Stunned.ToString()))
+                .AddAbilityEffectRunAction(ActionsBuilder.New().RemoveBuff(BuffRefs.BlindnessBuff.ToString()))
+                .AddAbilityEffectRunAction(ActionsBuilder.New().RemoveBuff(BuffRefs.GlitterdustBlindnessBuff.ToString()))
+                .AddAbilityEffectRunAction(ActionsBuilder.New().RemoveBuff(BuffRefs.DazzledBuff.ToString()))
+                .AddAbilityEffectRunAction(ActionsBuilder.New().RemoveBuff(BuffRefs.InsanityBuff.ToString()))
+                .AddAbilityEffectRunAction(ActionsBuilder.New().RemoveBuff(BuffRefs.FeeblemindBuff.ToString()))
+                .AddAbilityEffectRunAction(ActionsBuilder.New().RemoveBuff(BuffRefs.Ecorche_Buff_SeizeSkin.ToString()))
+                .AddAbilityEffectRunAction(ActionsBuilder.New().RemoveBuff(BuffRefs.Confusion.ToString()))
+                .AddAbilityEffectRunAction(ActionsBuilder.New().RemoveBuff(BuffRefs.Fatigued.ToString()))
+                .AddAbilityEffectRunAction(ActionsBuilder.New().RemoveBuff(BuffRefs.Exhausted.ToString()))
+                .AddAbilityEffectRunAction(ActionsBuilder.New().RemoveBuff(BuffRefs.Nauseated.ToString()))
+                .AddAbilityEffectRunAction(ActionsBuilder.New().RemoveBuff(BuffRefs.PoisonBuff.ToString()))
+                .AddAbilityEffectRunAction(ActionsBuilder.New().RemoveBuff(BuffRefs.Sickened.ToString()))
+                .AddAbilityEffectRunAction(ActionsBuilder.New()
+                    .RemoveBuffsByDescriptor(
+                        new SpellDescriptorWrapper(SpellDescriptor.StatDebuff)
+                    )
+                )
+                .Configure();
+
+
+            //"$ContextActionRemoveBuffsByDescriptor$0e050631-31d1-46dc-8ae9-f9f26fac1dec"
+             
             } catch (Exception ex) {
                 Logger.Error(ex.ToString());
             }
